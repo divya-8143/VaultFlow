@@ -17,7 +17,7 @@ export class AccountService {
     return undefined;
   }
 
-  public createAccount(userId: string, data: Omit<Account, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'isFavorite' | 'isActive'>): Account {
+  public createAccount(userId: string, data: Omit<Account, 'id' | 'userId' | 'createdAt' | 'updatedAt' | 'isFavorite' | 'isActive' | 'accountNumberMasked'> & { accountNumberMasked?: string }): Account {
     const masked = data.accountNumberMasked || `**** ${Math.floor(1000 + Math.random() * 9000)}`;
     const newAccount: Account = {
       id: uuidv4(),
