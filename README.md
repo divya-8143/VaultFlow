@@ -84,3 +84,5 @@ MIT License.
 <!-- Module feature/compliance-and-market-data active -->
 
 <!-- Module feature/analytics-and-reports active -->
+
+<!-- Module feature/admin-and-web-ui active -->
