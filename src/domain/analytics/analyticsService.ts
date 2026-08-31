@@ -95,3 +95,9 @@ export class AnalyticsService {
     );
   }
 }
+
+// Financial Health Ratio Engine
+export function calculateDebtToIncomeRatio(monthlyDebtPayments: number, grossMonthlyIncome: number): number {
+  if (grossMonthlyIncome <= 0) return 0;
+  return Math.round((monthlyDebtPayments / grossMonthlyIncome) * 10000) / 100;
+}
