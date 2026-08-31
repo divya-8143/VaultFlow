@@ -82,3 +82,5 @@ MIT License.
 <!-- Module feature/banking-and-tax-engines active -->
 
 <!-- Module feature/compliance-and-market-data active -->
+
+<!-- Module feature/analytics-and-reports active -->
