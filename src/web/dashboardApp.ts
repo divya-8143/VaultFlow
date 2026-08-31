@@ -41,11 +41,13 @@ export class DashboardApp {
     .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
+    .modal-overlay { display: none; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); }
+    .modal-overlay.active { display: flex; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen">
+<body class="bg-slate-950 text-slate-100 min-h-screen relative">
   <!-- Top Navigation Bar -->
-  <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-50 backdrop-blur-md">
+  <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-40 backdrop-blur-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
@@ -75,7 +77,7 @@ export class DashboardApp {
         </div>
         <button onclick="openModal('add-transaction-modal')" class="px-4 py-2 text-sm font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-          New Entry
+          + New Entry
         </button>
       </div>
     </div>
@@ -101,7 +103,6 @@ export class DashboardApp {
     <div id="view-overview" class="tab-content active space-y-6">
       <!-- Metric Cards Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <!-- Net Worth Card -->
         <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
           <div class="flex justify-between items-start">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Net Worth</span>
@@ -118,7 +119,6 @@ export class DashboardApp {
           </div>
         </div>
 
-        <!-- Monthly Savings Rate -->
         <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
           <div class="flex justify-between items-start">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Savings Rate</span>
@@ -135,7 +135,6 @@ export class DashboardApp {
           </div>
         </div>
 
-        <!-- Liquid Cash Balance -->
         <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
           <div class="flex justify-between items-start">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Primary Checking</span>
@@ -149,7 +148,6 @@ export class DashboardApp {
           </div>
         </div>
 
-        <!-- High-Yield Savings -->
         <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
           <div class="flex justify-between items-start">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">HYSA Savings (4.85% APY)</span>
@@ -166,7 +164,6 @@ export class DashboardApp {
 
       <!-- Main Visualizations Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Cashflow Trend SVG Chart -->
         <div class="glass-card rounded-2xl p-6 lg:col-span-2">
           <div class="flex justify-between items-center mb-6">
             <div>
@@ -179,7 +176,6 @@ export class DashboardApp {
             </div>
           </div>
           
-          <!-- Simple Clean SVG Bar Chart -->
           <div class="h-64 w-full flex items-end justify-between gap-4 pt-4 px-2">
             ${cashFlow.map(c => `
               <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end group">
@@ -193,13 +189,12 @@ export class DashboardApp {
           </div>
         </div>
 
-        <!-- Top Expense Categories Breakdown -->
         <div class="glass-card rounded-2xl p-6">
           <h3 class="font-bold text-lg text-slate-100 mb-1">Spending Categories</h3>
           <p class="text-xs text-slate-400 mb-6">Top Expenditure Allocations</p>
           
           <div class="space-y-4">
-            ${categoryBreakdown.slice(0, 5).map((cat, idx) => `
+            ${categoryBreakdown.slice(0, 5).map(cat => `
               <div>
                 <div class="flex justify-between text-xs font-medium mb-1.5">
                   <span class="text-slate-300">${cat.category}</span>
@@ -296,9 +291,6 @@ export class DashboardApp {
             <h2 class="text-xl font-bold text-slate-100">Transaction Ledger</h2>
             <p class="text-xs text-slate-400">Search, filter, and audit income and expenses</p>
           </div>
-          <div class="flex gap-3 w-full sm:w-auto">
-            <input type="text" placeholder="Filter merchant or description..." class="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-sm text-slate-200 focus:outline-none focus:border-blue-500 w-full sm:w-64" />
-          </div>
         </div>
 
         <div class="overflow-x-auto">
@@ -333,7 +325,6 @@ export class DashboardApp {
     <!-- TAB 4: BUDGETS & GOALS -->
     <div id="view-budgets" class="tab-content space-y-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Envelope Budgets -->
         <div class="glass-card rounded-2xl p-6 space-y-6">
           <div>
             <h2 class="text-xl font-bold text-slate-100">Category Budgets</h2>
@@ -359,7 +350,6 @@ export class DashboardApp {
           </div>
         </div>
 
-        <!-- Savings Goals -->
         <div class="glass-card rounded-2xl p-6 space-y-6">
           <div>
             <h2 class="text-xl font-bold text-slate-100">Savings Goals</h2>
@@ -431,6 +421,64 @@ export class DashboardApp {
     </div>
   </main>
 
+  <!-- MODAL: ADD TRANSACTION -->
+  <div id="add-transaction-modal" class="modal-overlay fixed inset-0 z-50 items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-5">
+      <div class="flex justify-between items-center">
+        <h3 class="text-lg font-bold text-slate-100">Add New Transaction</h3>
+        <button onclick="closeModal('add-transaction-modal')" class="text-slate-400 hover:text-slate-200 text-xl font-bold">&times;</button>
+      </div>
+
+      <form id="tx-form" onsubmit="submitTransaction(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Account</label>
+          <select id="tx-accountId" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+            ${accounts.map(a => `<option value="${a.id}">${a.name} (${a.accountNumberMasked})</option>`).join('')}
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Type</label>
+            <select id="tx-type" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+              <option value="EXPENSE">EXPENSE</option>
+              <option value="INCOME">INCOME</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400 mb-1">Amount ($)</label>
+            <input type="number" step="0.01" id="tx-amount" required placeholder="0.00" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Merchant / Payee Name</label>
+          <input type="text" id="tx-merchantName" required placeholder="e.g. Trader Joe's, Starbucks" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 mb-1">Category</label>
+          <select id="tx-category" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-blue-500">
+            <option value="Groceries & Supermarket">Groceries & Supermarket</option>
+            <option value="Dining & Restaurants">Dining & Restaurants</option>
+            <option value="Housing & Rent">Housing & Rent</option>
+            <option value="Utilities & Bills">Utilities & Bills</option>
+            <option value="Transportation & Gas">Transportation & Gas</option>
+            <option value="Entertainment & Streaming">Entertainment & Streaming</option>
+            <option value="Shopping & Apparel">Shopping & Apparel</option>
+            <option value="Salary & Wages">Salary & Wages</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="closeModal('add-transaction-modal')" class="px-4 py-2 text-sm font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700">Cancel</button>
+          <button type="submit" class="px-4 py-2 text-sm font-semibold rounded-xl bg-blue-600 hover:bg-blue-500 text-white shadow-md">Save Transaction</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     function switchTab(tabName) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -438,7 +486,51 @@ export class DashboardApp {
       
       document.getElementById('view-' + tabName).classList.add('active');
       const btn = document.getElementById('tab-' + tabName);
-      btn.classList.add('active', 'text-blue-400', 'bg-slate-700/70', 'shadow-sm');
+      if (btn) btn.classList.add('active', 'text-blue-400', 'bg-slate-700/70', 'shadow-sm');
+    }
+
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) modal.classList.remove('active');
+    }
+
+    async function submitTransaction(e) {
+      e.preventDefault();
+      const accountId = document.getElementById('tx-accountId').value;
+      const type = document.getElementById('tx-type').value;
+      const amount = parseFloat(document.getElementById('tx-amount').value);
+      const merchantName = document.getElementById('tx-merchantName').value;
+      const category = document.getElementById('tx-category').value;
+
+      try {
+        const res = await fetch('/api/v1/transactions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            accountId,
+            type,
+            amount,
+            merchantName,
+            category,
+            date: new Date().toISOString()
+          })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          closeModal('add-transaction-modal');
+          location.reload();
+        } else {
+          alert('Error creating transaction: ' + data.error);
+        }
+      } catch (err) {
+        alert('Failed to connect to server');
+      }
     }
 
     function dismissAlert(alertId) {
