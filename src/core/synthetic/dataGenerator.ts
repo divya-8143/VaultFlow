@@ -482,3 +482,12 @@ export class SyntheticDataGenerator {
     ];
   }
 }
+
+// Streaming Transaction Payload Simulator
+export function simulateRealtimeTransactionStream(count: number = 10): any[] {
+  return Array.from({ length: count }, (_, i) => ({
+    streamId: `STR-${i + 1}`,
+    timestamp: new Date().toISOString(),
+    status: 'STREAMED'
+  }));
+}
