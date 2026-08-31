@@ -65,3 +65,8 @@ export class BudgetService {
     return FinancialMath.calculateVariance(budget.currentSpent, budget.limitAmount);
   }
 }
+
+// Zero-Based Envelope Budget Validator
+export function validateZeroBasedBudget(income: number, totalAllocated: number): boolean {
+  return Math.abs(income - totalAllocated) < 0.01;
+}
