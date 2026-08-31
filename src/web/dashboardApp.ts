@@ -101,7 +101,6 @@ export class DashboardApp {
 
     <!-- TAB 1: OVERVIEW -->
     <div id="view-overview" class="tab-content active space-y-6">
-      <!-- Metric Cards Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div class="glass-card rounded-2xl p-5 relative overflow-hidden">
           <div class="flex justify-between items-start">
@@ -380,26 +379,119 @@ export class DashboardApp {
       </div>
     </div>
 
-    <!-- TAB 5: ANALYTICS -->
+    <!-- TAB 5: ENHANCED ANALYTICS PAGE -->
     <div id="view-analytics" class="tab-content space-y-6">
-      <div class="glass-card rounded-2xl p-6 space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h2 class="text-xl font-bold text-slate-100">Monte Carlo Retirement Simulation</h2>
-          <p class="text-xs text-slate-400">20-Year Wealth Trajectory Forecast (5,000 Trajectories Run)</p>
+          <h2 class="text-2xl font-bold text-slate-100">Financial Analytics & Wealth Projections</h2>
+          <p class="text-xs text-slate-400">Monte Carlo Simulations, Spending Velocity & Risk Health Indicators</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-semibold px-3 py-1.5 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">5,000 Trajectories Run</span>
+        </div>
+      </div>
+
+      <!-- Monte Carlo Percentiles Summary -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">P10 (Pessimistic 10th %)</span>
+            <span class="p-2 rounded-xl bg-amber-500/10 text-amber-400">🛡️</span>
+          </div>
+          <div class="text-3xl font-bold text-amber-400 mt-3">${CurrencyUtils.format(monteCarlo.p10)}</div>
+          <p class="text-xs text-slate-400 mt-2">20-Year Value under high volatility market corrections</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs text-slate-400 font-medium uppercase">P10 (Conservative)</span>
-            <div class="text-2xl font-bold text-amber-400 mt-1">${CurrencyUtils.format(monteCarlo.p10)}</div>
+        <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-semibold uppercase tracking-wider text-blue-400">P50 (Expected Median)</span>
+            <span class="p-2 rounded-xl bg-blue-500/10 text-blue-400">🎯</span>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs text-slate-400 font-medium uppercase">P50 (Expected Median)</span>
-            <div class="text-2xl font-bold text-blue-400 mt-1">${CurrencyUtils.format(monteCarlo.p50)}</div>
+          <div class="text-3xl font-bold text-blue-400 mt-3">${CurrencyUtils.format(monteCarlo.p50)}</div>
+          <p class="text-xs text-slate-400 mt-2">Expected 20-year wealth at 7.5% average annual return</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+          <div class="flex justify-between items-start">
+            <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">P90 (Optimistic 90th %)</span>
+            <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">🚀</span>
           </div>
-          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-            <span class="text-xs text-slate-400 font-medium uppercase">P90 (Optimistic)</span>
-            <div class="text-2xl font-bold text-emerald-400 mt-1">${CurrencyUtils.format(monteCarlo.p90)}</div>
+          <div class="text-3xl font-bold text-emerald-400 mt-3">${CurrencyUtils.format(monteCarlo.p90)}</div>
+          <p class="text-xs text-slate-400 mt-2">Upper quartile growth projection under strong bull markets</p>
+        </div>
+      </div>
+
+      <!-- Financial Health & Risk Indicators Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 20-Year Growth Trajectory SVG Chart -->
+        <div class="glass-card rounded-2xl p-6 lg:col-span-2 space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="font-bold text-lg text-slate-100">20-Year Growth Curves</h3>
+              <p class="text-xs text-slate-400">Monte Carlo Simulated Portfolio Growth Over Time</p>
+            </div>
+            <div class="flex items-center gap-4 text-xs font-medium">
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-400"></span> P90</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-blue-400"></span> P50</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-400"></span> P10</span>
+            </div>
+          </div>
+
+          <!-- SVG Trajectory Curve -->
+          <div class="h-64 w-full pt-4 relative">
+            <svg class="w-full h-full" viewBox="0 0 500 200" preserveAspectRatio="none">
+              <!-- Grid lines -->
+              <line x1="0" y1="40" x2="500" y2="40" stroke="#334155" stroke-dasharray="4" />
+              <line x1="0" y1="90" x2="500" y2="90" stroke="#334155" stroke-dasharray="4" />
+              <line x1="0" y1="140" x2="500" y2="140" stroke="#334155" stroke-dasharray="4" />
+
+              <!-- P90 Curve (Emerald) -->
+              <path d="M 0,180 Q 150,150 250,90 T 500,20" fill="none" stroke="#34d399" stroke-width="3" />
+
+              <!-- P50 Curve (Blue) -->
+              <path d="M 0,180 Q 150,160 250,120 T 500,60" fill="none" stroke="#60a5fa" stroke-width="3" />
+
+              <!-- P10 Curve (Amber) -->
+              <path d="M 0,180 Q 150,170 250,145 T 500,105" fill="none" stroke="#fbbf24" stroke-width="3" />
+            </svg>
+            <div class="flex justify-between text-xs text-slate-400 mt-2 font-medium">
+              <span>Year 0</span>
+              <span>Year 5</span>
+              <span>Year 10</span>
+              <span>Year 15</span>
+              <span>Year 20</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Health Metrics & Asset Allocation -->
+        <div class="glass-card rounded-2xl p-6 space-y-5">
+          <h3 class="font-bold text-lg text-slate-100">Financial Health Ratios</h3>
+          
+          <div class="space-y-4">
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-300">Emergency Liquidity Coverage</span>
+                <span class="text-emerald-400">6.2 Months</span>
+              </div>
+              <p class="text-xs text-slate-400">Covers 6+ months of living expenses in HYSA & Checking</p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-300">Debt-to-Income (DTI)</span>
+                <span class="text-emerald-400">22.4% (Healthy)</span>
+              </div>
+              <p class="text-xs text-slate-400">Well below the 36% recommended risk threshold</p>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1">
+              <div class="flex justify-between text-xs font-semibold">
+                <span class="text-slate-300">Spending Velocity</span>
+                <span class="text-blue-400">$116.40 / Day</span>
+              </div>
+              <p class="text-xs text-slate-400">Average daily burn rate for current month</p>
+            </div>
           </div>
         </div>
       </div>
