@@ -78,3 +78,14 @@ export class AlertService {
     return generatedAlerts;
   }
 }
+
+// Priority Alert Webhook Dispatcher
+export function formatAlertWebhookPayload(alertId: string, priority: string, message: string) {
+  return {
+    event: 'ALERT_TRIGGERED',
+    alertId,
+    priority,
+    message,
+    dispatchedAt: new Date().toISOString()
+  };
+}
