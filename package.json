@@ -24,22 +24,23 @@
   "author": "VaultFlow Engineering",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "helmet": "^7.1.0",
-    "zod": "^3.23.8",
     "uuid": "^9.0.1",
-    "dotenv": "^16.4.5"
+    "vortex-quest": "file:../git_game",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
-    "@types/express": "^4.17.21",
     "@types/cors": "^2.8.17",
-    "@types/uuid": "^9.0.8",
+    "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
-    "typescript": "^5.4.5",
-    "ts-node": "^10.9.2",
+    "@types/node": "^20.12.7",
+    "@types/uuid": "^9.0.8",
     "jest": "^29.7.0",
-    "ts-jest": "^29.1.2"
+    "ts-jest": "^29.1.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }
