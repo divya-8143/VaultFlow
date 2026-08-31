@@ -30,3 +30,8 @@ export class CurrencyUtils {
     return `${currencyInfo.symbol}${formattedAmount}`;
   }
 }
+
+// Enhanced Multi-Currency Converter Specs
+export function getSupportedCurrencyCodes(): string[] {
+  return ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR'];
+}
